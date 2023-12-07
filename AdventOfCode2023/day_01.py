@@ -29,7 +29,6 @@ word_to_digit_mapping = word_to_digit_crossover_mapping | word_to_digit_singles_
 
 
 def part_one(input_list):
-    """Q: What is the sum of all of the calibration values?"""
     total_calibration_p1 = 0
     for calibration in input_list:
         digits_only_string = "".join(re.findall(r"\d", calibration))
@@ -39,7 +38,6 @@ def part_one(input_list):
 
 
 def part_two(input_list):
-    """Q: What is the sum of all of the calibration values?"""
     total_calibration_p2 = 0
     for calibration in input_list:
         for key in word_to_digit_mapping:
