@@ -6,14 +6,13 @@ with open("AdventOfCode2023/InputData/input_02.txt", "r") as file:
 
 def part_one(input_list):
     """Q: What is the sum of the IDs of those games? (bag contains only 12 red, 13 green, and 14 blue or less)"""
-
     sum_of_ids = 0
     for game in input_list:
         game_id_string, game_rounds_string = game.split(":")
         game_id_num = int(game_id_string.split("Game ")[-1])
         game_rounds_list = [game_round.strip() for game_round in game_rounds_string.split(";")]
 
-        max_red, max_blue, max_green = 0, 0, 0
+        min_red, min_blue, min_green = 0, 0, 0
         for game_round in game_rounds_list:
             # Find number of each colour cube:
             number_of_red = int(re.search(r"(\d{1,2}) red", game_round).group(1)) if "red" in game_round else 0
@@ -21,12 +20,12 @@ def part_one(input_list):
             number_of_green = int(re.search(r"(\d{1,2}) green", game_round).group(1)) if "green" in game_round else 0
 
             # See if number of colour cube is new max for the round (meaning it is min amount of colour in the bag):
-            max_red = max(max_red, number_of_red)
-            max_blue = max(max_blue, number_of_blue)
-            max_green = max(max_green, number_of_green)
+            min_red = max(min_red, number_of_red)
+            min_blue = max(min_blue, number_of_blue)
+            min_green = max(min_green, number_of_green)
 
         # See if game passes given requirements:
-        if max_red <= 12 and max_green <= 13 and max_blue <= 14:
+        if min_red <= 12 and min_blue <= 13 and min_green <= 14:
             sum_of_ids += game_id_num
     return sum_of_ids
 
@@ -41,14 +40,14 @@ def part_two(input_list):
         min_red, min_green, min_blue = 0, 0, 0
         for game_round in game_rounds_list:
             # Find number of each colour cube:
-            red = int(re.search(r"(\d{1,2}) red", game_round).group(1)) if "red" in game_round else 0
-            blue = int(re.search(r"(\d{1,2}) blue", game_round).group(1)) if "blue" in game_round else 0
-            green = int(re.search(r"(\d{1,2}) green", game_round).group(1)) if "green" in game_round else 0
+            number_of_red = int(re.search(r"(\d{1,2}) red", game_round).group(1)) if "red" in game_round else 0
+            number_of_blue = int(re.search(r"(\d{1,2}) blue", game_round).group(1)) if "blue" in game_round else 0
+            number_of_green = int(re.search(r"(\d{1,2}) green", game_round).group(1)) if "green" in game_round else 0
 
             # See if number of colour cube is new max for the round (meaning it is min amount of colour in the bag):
-            min_red = max(min_red, red)
-            min_blue = max(min_blue, blue)
-            min_green = max(min_green, green)
+            min_red = max(min_red, number_of_red)
+            min_blue = max(min_blue, number_of_blue)
+            min_green = max(min_green, number_of_green)
 
         # Calculate the power of the game:
         single_game_power = min_red * min_blue * min_green
