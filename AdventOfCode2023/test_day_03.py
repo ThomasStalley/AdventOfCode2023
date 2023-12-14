@@ -1,13 +1,9 @@
 from AdventOfCode2023 import day_03
 
-sample_data_one = [
-    [ele for ele in row.strip()] for row in open("AdventOfCode2023/SampleData/sample_03_1.txt", "r").readlines()
-]
+sample_data_one = open("AdventOfCode2023/SampleData/sample_03_1.txt", "r").readlines()
 sample_answer_one = 4361
 
-sample_data_two = [
-    [ele for ele in row.strip()] for row in open("AdventOfCode2023/SampleData/sample_03_2.txt", "r").readlines()
-]
+sample_data_two = open("AdventOfCode2023/SampleData/sample_03_2.txt", "r").readlines()
 sample_answer_two = 467835
 
 
