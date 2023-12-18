@@ -50,24 +50,28 @@ class Grid:
         return records
 
 
-def _get_surrounding_coordinates(coordinates, grid_size):
-    surrounding = set()
-    for (i, j) in coordinates:
-        for surrounding_i in range(-1, 2):
-            for surrounding_j in range(-1, 2):
-                new_i, new_j = i + surrounding_i, j + surrounding_j
+class Helpers:
 
-                # Add new coordinate to surrounding coordinate set, if new coordinate is within the overall grid:
-                surrounding.add((new_i, new_j)) if (0 <= new_i < grid_size) and (0 <= new_j < grid_size) else None
-    return surrounding
+    @staticmethod
+    def get_surrounding_coordinates(coordinates, grid_size):
+        surrounding = set()
+        for (i, j) in coordinates:
+            for surrounding_i in range(-1, 2):
+                for surrounding_j in range(-1, 2):
+                    new_i, new_j = i + surrounding_i, j + surrounding_j
 
+                    # Add new coordinate to surrounding coordinate set, if new coordinate is within the overall grid:
+                    surrounding.add((new_i, new_j)) if (0 <= new_i < grid_size) and (0 <= new_j < grid_size) else None
+        return surrounding
 
-def _get_surrounding_characters(grid, surrounding_coordinates):
-    return [grid[i, j] for (i, j) in surrounding_coordinates]
+    @staticmethod
+    def get_surrounding_characters(grid, surrounding_coordinates):
+        return [grid[i, j] for (i, j) in surrounding_coordinates]
 
-
-def _check_surrounding_characters(surrounding_characters):
-    return any(symbol in ["#", "£", "*", "&", "%", "$", "-", "@", "+", "=", "/"] for symbol in surrounding_characters)
+    @staticmethod
+    def check_surrounding_characters(surrounding_characters):
+        return any(
+            symbol in ["#", "£", "*", "&", "%", "$", "-", "@", "+", "=", "/"] for symbol in surrounding_characters)
 
 
 def part_one(input_list):
@@ -96,9 +100,9 @@ def part_one(input_list):
             coordinates_covered.add((i, j + search_index))
             search_index += 1
 
-        surrounding_coordinates = _get_surrounding_coordinates(current_coordinates, schematic_grid_size)
-        surrounding_characters = _get_surrounding_characters(schematic_grid, surrounding_coordinates)
-        surrounding_characters_contains_symbol = _check_surrounding_characters(surrounding_characters)
+        surrounding_coordinates = Helpers.get_surrounding_coordinates(current_coordinates, schematic_grid_size)
+        surrounding_characters = Helpers.get_surrounding_characters(schematic_grid, surrounding_coordinates)
+        surrounding_characters_contains_symbol = Helpers.check_surrounding_characters(surrounding_characters)
         if surrounding_characters_contains_symbol:
             sum_of_numbers += int(current_number)
     return sum_of_numbers
@@ -114,7 +118,7 @@ def part_two(input_list):
         if element != "*":
             continue
         current_coordinates = [point]
-        surrounding_coordinates = _get_surrounding_coordinates(current_coordinates, schematic_grid_size)
+        surrounding_coordinates = Helpers.get_surrounding_coordinates(current_coordinates, schematic_grid_size)
         surrounding_keys = [f"{row}_{col}" for row, col in surrounding_coordinates]
 
         numbers_found = []
